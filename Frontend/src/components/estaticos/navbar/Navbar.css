@@ -2,7 +2,16 @@
     background-color: #BF9D7E;
 }
 
-.cor-font-typography{
+
+.hover:hover{
+    background-color: #dbccc6;
+    transition: 0.3s;
+    padding: 1px;    
+    border: 2px solid;
+    border-radius: 10px;
+}
+
+.cor-font-typography{    
     color: #8C5845;
 }
 
@@ -12,5 +21,6 @@
 }
 
 .text-decorator-none{
+    width: 100%;
     text-decoration: none;
 }

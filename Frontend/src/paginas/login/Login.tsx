@@ -41,7 +41,7 @@ function Login() {
 
             <Box marginTop={2} textAlign="center">
               <Link to="/home" className="text-decorator-none">
-                <Button type="submit" variant="contained" color="primary">
+                <Button type="submit" variant="contained" className="cor-botao">
                   Logar
                 </Button>
               </Link>

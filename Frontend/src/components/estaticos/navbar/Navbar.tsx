@@ -1,7 +1,6 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, Box } from "@material-ui/core";
+import { AppBar, Toolbar, Typography, Box, Grid } from "@material-ui/core";
 import "./Navbar.css";
-import MenuComponent from "../Menu/MenuComponent";
 import { Link } from "react-router-dom";
 function Navbar() {
   return (
@@ -9,46 +8,53 @@ function Navbar() {
       <AppBar position="static">
         <Toolbar variant="dense" className="toolbar">
           <Box className="boxTopo" display="flex">
-            <Box className='cursor'>
-              <Typography variant="h5" className="cor-font-typography">
-                BlogPessoal
-              </Typography>
-            </Box>
-
-            <Box display="flex" justifyContent="start">
-              <Box mx={1} className='cursor'>
-                <Typography variant="h6" className="cor-font-typography">
-                  HOME
-                </Typography>
-              </Box>
-              <Box mx={1} className='cursor'>
-                <Typography variant="h6" className="cor-font-typography">
-                  POSTAGENS
-                </Typography>
-              </Box>
-              <Box mx={1} className='cursor'>
-                <Typography variant="h6" className="cor-font-typography">
-                  TEMAS
-                </Typography>
-              </Box>
-              <Box mx={1} className='cursor'>
-                <Typography variant="h6" className="cor-font-typography">
-                  CADASTRAR TEMA
-                </Typography>
-              </Box>
-
-              <Link to='/login' className='text-decorator-none'>
-                <Box mx={1} className='cursor'>
-                  <Typography variant="h6" className="cor-font-typography">
-                    LOGOUT
+            <Grid container spacing={35} justifyContent="space-between" alignItems="center">
+              <Grid item xs={6}>
+                <Box className="cursor">
+                  <Typography variant="h5" className="cor-font-typography">
+                    BlogPessoal
                   </Typography>
                 </Box>
-              </Link>
+              </Grid>
 
-              <Box mx={1} className='cursor'>
-                <MenuComponent />
-              </Box>
-            </Box>
+              <Grid item xs={6}>
+                <Box
+                  display="flex"
+                  justifyContent="start"
+                  alignItems="center"
+                  className="margin-left"
+                >
+                  <Box mx={1} className="cursor hover">
+                    <Typography variant="h6" className="cor-font-typography">
+                      HOME
+                    </Typography>
+                  </Box>
+                  <Box mx={1} className="cursor hover">
+                    <Typography variant="h6" className="cor-font-typography">
+                      POSTAGENS
+                    </Typography>
+                  </Box>
+                  <Box mx={1} className="hover">
+                    <Typography variant="h6" className="cor-font-typography">
+                      TEMAS
+                    </Typography>
+                  </Box>
+                  <Box mx={1} className="hover">
+                    <Typography variant="h6" className="cor-font-typography" noWrap>
+                      CADASTRAR TEMA
+                    </Typography>
+                  </Box>
+
+                  <Box mx={1} className="hover">
+                    <Link to="/login" className="text-decorator-none">
+                      <Typography variant="h6" className="cor-font-typography">
+                        LOGOUT
+                      </Typography>
+                    </Link>
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
           </Box>
         </Toolbar>
       </AppBar>
