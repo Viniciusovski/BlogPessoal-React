@@ -1,14 +1,50 @@
-import { Box, Grid, Typography, TextField, Button } from "@material-ui/core";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, ChangeEvent } from "react";
+import { Grid, Box, Typography, TextField, Button } from "@material-ui/core";
+import { Link, useHistory } from "react-router-dom";
+import { login } from "../../services/Service";
+import useLocalStorage from "react-use-localstorage";
+import UserLogin from "../../models/UserLogin";
 import "./Login.css";
 
 function Login() {
+  let history = useHistory();
+  const [token, setToken] = useLocalStorage("token");
+  const [userLogin, setUserLogin] = useState<UserLogin>({
+    id: 0,
+    usuario: "",
+    senha: "",
+    token: "",
+  });
+
+  function updatedModel(e: ChangeEvent<HTMLInputElement>) {
+    setUserLogin({
+      ...userLogin,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  useEffect(() => {
+    if (token != "") {
+      history.push("/home");
+    }
+  }, [token]);
+
+  async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
+    e.preventDefault();
+    try {
+      await login(`/usuarios/logar`, userLogin, setToken);
+
+      alert("Usuário logado com sucesso!");
+    } catch (error) {
+      alert("Dados do usuário inconsistentes. Erro ao logar!");
+    }
+  }
+  
   return (
     <Grid container direction="row" justifyContent="center" alignItems="center">
       <Grid xs={6} alignItems="center">
         <Box paddingX={20}>
-          <form>
+          <form onSubmit={onSubmit}>
             <Typography
               variant="h3"
               gutterBottom
@@ -21,6 +57,8 @@ function Login() {
             </Typography>
 
             <TextField
+              value={userLogin.usuario}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)}
               id="usuario"
               label="usuário"
               variant="outlined"
@@ -30,6 +68,8 @@ function Login() {
             />
 
             <TextField
+              value={userLogin.senha}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)}
               id="senha"
               label="senha"
               variant="outlined"
@@ -40,11 +80,9 @@ function Login() {
             />
 
             <Box marginTop={2} textAlign="center">
-              <Link to="/home" className="text-decorator-none">
-                <Button type="submit" variant="contained" className="cor-botao">
-                  Logar
-                </Button>
-              </Link>
+              <Button type="submit" variant="contained" className="cor-botao">
+                Logar
+              </Button>
             </Box>
           </form>
 
@@ -54,14 +92,16 @@ function Login() {
                 Não tem uma conta?
               </Typography>
             </Box>
-            <Typography
-              variant="subtitle1"
-              gutterBottom
-              align="center"
-              className="textos1"
-            >
-              Cadastre-se
-            </Typography>
+            <Link to="/cadastrousuario">
+              <Typography
+                variant="subtitle1"
+                gutterBottom
+                align="center"
+                className="textos1"
+              >
+                Cadastre-se
+              </Typography>
+            </Link>
           </Box>
         </Box>
       </Grid>
