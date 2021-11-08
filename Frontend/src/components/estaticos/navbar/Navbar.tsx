@@ -21,7 +21,7 @@ function Navbar() {
           <Box className="boxTopo" display="flex">
             <Grid
               container
-              spacing={35}
+              spacing={8}
               justifyContent="space-between"
               alignItems="center"
             >

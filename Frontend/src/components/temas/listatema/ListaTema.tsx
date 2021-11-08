@@ -5,8 +5,7 @@ import Tema from '../../../models/Tema';
 import useLocalStorage from 'react-use-localstorage';
 import { useHistory } from 'react-router-dom'
 import { busca } from '../../../services/Service';
-import { Button, Card, CardActions, CardContent, Typography } from '@mui/material';
-import { Box } from '@material-ui/system';
+import { Button, Card, CardActions, CardContent, Typography, Box } from '@mui/material';
 
 function ListaTema() {
   const [temas, setTemas] = useState<Tema[]>([])
