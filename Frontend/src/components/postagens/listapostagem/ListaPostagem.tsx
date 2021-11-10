@@ -3,14 +3,22 @@ import { useHistory } from "react-router-dom";
 import { Link } from 'react-router-dom'
 import { Box, Card, CardActions, CardContent, Button, Typography } from '@mui/material';
 import './ListaPostagem.css';
-import useLocalStorage from 'react-use-localstorage';
 import Postagem from '../../../models/Postagem';
 import { busca } from '../../../services/Service'
+import { useSelector } from 'react-redux';
+import { TokenState } from '../../../store/tokens/tokensReducer';
 
 function ListaPostagem() {
-  const [posts, setPosts] = useState<Postagem[]>([])
-  const [token, setToken] = useLocalStorage('token');
+  const [posts, setPosts] = useState<Postagem[]>([])  
   let history = useHistory();
+    /*
+   Hook useSelector: vai acessar o store, pegar o token
+   e atribuir na const token
+   a const token que vai ser verificada no useEffect
+   */
+  const token = useSelector<TokenState, TokenState["tokens"]>(
+     (state) => state.tokens
+   ); 
 
   useEffect(() => {
     if (token == "") {

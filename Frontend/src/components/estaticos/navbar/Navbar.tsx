@@ -3,20 +3,34 @@ import { AppBar, Toolbar, Typography, Box, Grid } from "@material-ui/core";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import {useHistory} from 'react-router-dom';
-import useLocalStorage from "react-use-localstorage";
+import { useDispatch, useSelector } from "react-redux";
+import { TokenState } from "../../../store/tokens/tokensReducer";
+import { addToken } from "../../../store/tokens/actions";
 
 function Navbar() {
-  const [token, setToken] = useLocalStorage('token');
+  const token = useSelector<TokenState, TokenState["tokens"]>(
+    (state) => state.tokens
+  );
   let history = useHistory();
+  const dispatch = useDispatch(); //Dispara a ação para ser armazenada no store
 
   function goLogout(){
-    setToken('')
+    /*
+    Ao invés de enviar um token, vai modifica-lo para vazio
+    sendo assim por não ter o token ele desloga da aplicação
+    e redireciona para a tela de login
+    */
+    dispatch(addToken(''));
     alert('Usuário deslogado')
     history.push('login')
   }
-  return (
-    <>
-      <AppBar position="static">
+
+  var navbarComponent;
+  /*
+  Renderiza o componente, se o token não for vazio
+  */
+  if(token != ""){
+        navbarComponent = <AppBar position="static">
         <Toolbar variant="dense" className="toolbar">
           <Box className="boxTopo" display="flex">
             <Grid
@@ -89,6 +103,10 @@ function Navbar() {
           </Box>
         </Toolbar>
       </AppBar>
+  }
+  return (
+    <>
+      {navbarComponent}
     </>
   );
 }

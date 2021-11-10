@@ -2,13 +2,19 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import { Grid, Box, Typography, TextField, Button } from "@mui/material";
 import { Link, useHistory } from "react-router-dom";
 import { login } from "../../services/Service";
-import useLocalStorage from "react-use-localstorage";
 import UserLogin from "../../models/UserLogin";
 import "./Login.css";
+import { useDispatch } from "react-redux";
+import { addToken } from "../../store/tokens/actions";
 
-function Login() {
+function Login() {  
   let history = useHistory();
-  const [token, setToken] = useLocalStorage("token");
+  /*
+  Inicializar o Dispatcher que é responsavel por enviar a ação
+  para que o reducer possa intercepta-la
+  */
+  const dispatch = useDispatch();
+  const [token, setToken] = useState(""); // Ao invés de localStorage, usa o useSate
   const [userLogin, setUserLogin] = useState<UserLogin>({
     id: 0,
     usuario: "",
@@ -25,6 +31,7 @@ function Login() {
 
   useEffect(() => {
     if (token != "") {
+      dispatch(addToken(token)); //Função dispatch guarda a ação addToken
       history.push("/home");
     }
   }, [token]);

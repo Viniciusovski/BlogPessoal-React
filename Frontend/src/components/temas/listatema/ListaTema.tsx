@@ -2,15 +2,23 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './ListaTema.css';
 import Tema from '../../../models/Tema';
-import useLocalStorage from 'react-use-localstorage';
 import { useHistory } from 'react-router-dom'
 import { busca } from '../../../services/Service';
-import { Button, Card, CardActions, CardContent, Typography, Box } from '@mui/material';
+import { Button, Card, CardActions, CardContent, Typography, Box } from '@material-ui/core';
+import { TokenState } from '../../../store/tokens/tokensReducer';
+import { useSelector } from 'react-redux';
 
 function ListaTema() {
-  const [temas, setTemas] = useState<Tema[]>([])
-  const [token, setToken] = useLocalStorage('token');
+  const [temas, setTemas] = useState<Tema[]>([])  
   let history = useHistory();
+    /*
+   Hook useSelector: vai acessar o store, pegar o token
+   e atribuir na const token
+   a const token que vai ser verificada no useEffect
+   */
+  const token = useSelector<TokenState, TokenState["tokens"]>(
+   (state) => state.tokens
+  ); 
 
   useEffect(()=>{
     if(token == ''){
